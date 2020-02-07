@@ -1,0 +1,28 @@
+version: "3.3"
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - openfire_db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_PASSWORD=
+      - MYSQL_DATABASE=openfire
+      - MYSQL_USER=openfire
+
+  app:
+    image: openfire
+    restart: always
+    volumes:
+      - openfire:/opt/openfire
+    ports:
+      - 9090:9090
+      - 5222:5222
+      - 7777:7777
+    depends_on:
+      - db
+
+volumes:
+  openfire_db:
+  openfire:
